@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "646403755673",
+    "project_id": "swadhyaya-22b37",
+    "storage_bucket": "swadhyaya-22b37.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:646403755673:android:a9163534386c3a28223208",
+        "android_client_info": {
+          "package_name": "com.example.swadhyaya"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "646403755673-g1rumtu23ov8lulfvrscgjl5jlcsru9o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDt-fKyVgFzRs6bhXzdqoAIWTKFvDn7iDA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "646403755673-g1rumtu23ov8lulfvrscgjl5jlcsru9o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
