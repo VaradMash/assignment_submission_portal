@@ -20,6 +20,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity
 {
@@ -69,7 +70,10 @@ public class LoginActivity extends AppCompatActivity
                                     //For successful login, proceed to user profile.
                                     if (task.isSuccessful())
                                     {
-
+                                        Intent intent = new Intent(LoginActivity.this, com.example.swadhyaya.LoginActivity.class);
+                                        intent.putExtra("remember_me", remember_me);
+                                        startActivity(intent);
+                                        LoginActivity.this.finish();
                                     }
                                     else
                                     {
@@ -115,12 +119,25 @@ public class LoginActivity extends AppCompatActivity
                 etSignInEmail.setText("");
                 etSignInPassword.setText("");
                 //Launch intent.
-                Intent intent = new Intent(LoginActivity.this, com.example.swadhyaya.LoginActivity.class);
+                Intent intent = new Intent(LoginActivity.this, com.example.swadhyaya.RegistrationActivity.class);
                 startActivity(intent);
                 LoginActivity.this.finish();
             }
         });
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        //if the device has an active user, go to user profile.
+        if(mAuth.getCurrentUser() != null)
+        {
+            Intent intent = new Intent(LoginActivity.this, com.example.swadhyaya.UserProfile.class);
+            intent.putExtra("remember_me", true);
+            startActivity(intent);
+            LoginActivity.this.finish();
+        }
     }
 
     @Override

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Menu Resource file -->
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/assignments"
+        android:icon="@drawable/assignments_image"
+        android:title="@string/assignments"/>
+
+    <item
+        android:id="@+id/myProfile"
+        android:icon="@drawable/profile_icon"
+        android:title="@string/my_profile"/>
+
+    <item
+        android:id="@+id/faculty"
+        android:icon="@drawable/faculty_logo"
+        android:title="@string/my_faculty"/>
+
+    <item
+        android:id="@+id/logout_logo"
+        android:icon="@drawable/log_out_logo"
+        android:title="@string/log_out"/>
+
+</menu>

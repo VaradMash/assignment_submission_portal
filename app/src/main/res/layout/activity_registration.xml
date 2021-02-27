@@ -21,6 +21,7 @@
         android:textStyle="bold"
         android:textSize="50sp"
         android:textColor="@color/black"
+        android:fontFamily="@font/app_font"
         />
 
     <EditText
@@ -130,6 +131,7 @@
             />
 
         <ImageView
+            android:contentDescription="@string/usericon"
             android:id="@+id/imageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -154,6 +156,7 @@
             android:visibility="gone"/>
 
         <Button
+            android:padding="5dp"
             android:id="@+id/btnOpenLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

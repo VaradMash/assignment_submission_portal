@@ -139,8 +139,6 @@ public class RegistrationActivity extends AppCompatActivity
                                                 .build();
 
                                         current_user.updateProfile(changeRequest);
-
-
                                         //Add user's details to "Users" child of the relational database.
                                         mDatabase.child(mAuth.getCurrentUser().getUid()).setValue(user)
                                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -149,6 +147,18 @@ public class RegistrationActivity extends AppCompatActivity
                                                         if(task.isSuccessful())
                                                         {
                                                             Toast.makeText(RegistrationActivity.this, "Registration successful !", Toast.LENGTH_SHORT).show();
+                                                            //Jump to user profile.
+                                                            Intent intent = new Intent(RegistrationActivity.this, com.example.swadhyaya.UserProfile.class);
+                                                            intent.putExtra("remember_me", true);
+                                                            startActivity(intent);
+                                                            //Clear field contents.
+                                                            etSignUpUsername.setText("");
+                                                            etSignUpEmail.setText("");
+                                                            etSignUpPassword.setText("");
+                                                            etClass.setText("");
+                                                            etInstitution.setText("");
+                                                            //Close current intent
+                                                            RegistrationActivity.this.finish();
                                                         }
                                                         else {
                                                             Toast.makeText(RegistrationActivity.this, "An error occurred in database update ! !", Toast.LENGTH_SHORT).show();
