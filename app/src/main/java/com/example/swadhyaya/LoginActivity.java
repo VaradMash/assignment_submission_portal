@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,6 +32,7 @@ public class LoginActivity extends AppCompatActivity
     TextView tvLoginTitle;
     @SuppressLint("UseSwitchCompatOrMaterialCode")
     Switch remember_me_switch;
+    ProgressBar signInProgressBar;
     boolean remember_me=false;
 
     @Override
@@ -49,7 +51,7 @@ public class LoginActivity extends AppCompatActivity
         etSignInPassword = (EditText)findViewById(R.id.etSignInPassword);
         tvLoginTitle = (TextView) findViewById(R.id.tvLoginTitle);
         remember_me_switch = (Switch)findViewById(R.id.remember_me_switch);
-
+        signInProgressBar = (ProgressBar)findViewById(R.id.signInProgressBar);
         btnAuthenticate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,6 +64,7 @@ public class LoginActivity extends AppCompatActivity
                 }
                 else
                 {
+                    signInProgressBar.setVisibility(View.VISIBLE);
                     //Authenticate with Firebase.
                     mAuth.signInWithEmailAndPassword(email, password)
                             .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -79,6 +82,7 @@ public class LoginActivity extends AppCompatActivity
                                     {
                                         Toast.makeText(LoginActivity.this, "Invalid Credentials !", Toast.LENGTH_SHORT).show();
                                     }
+                                    signInProgressBar.setVisibility(View.GONE);
                                 }
                             });
                 }

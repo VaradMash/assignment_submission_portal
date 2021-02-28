@@ -10,9 +10,12 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.transition.Slide;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,28 +31,37 @@ public class UserProfile extends AppCompatActivity {
     ActionBarDrawerToggle toggle;
     DrawerLayout drawerLayout;
     FirebaseUser user;
-    TextView navBarUsername, navBarInstitute;
+    TextView navBarUsername;
+    LinearLayout navigation_header;
     boolean remember_me;
-    DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        navigation_header = (LinearLayout)findViewById(R.id.navigation_header);
+
+        Intent intent = getIntent();
+        remember_me = intent.getBooleanExtra("remember_me", true);
+        user = FirebaseAuth.getInstance().getCurrentUser();
+
 
         navigationView = (NavigationView)findViewById(R.id.navigationView);
         drawerLayout = (DrawerLayout)findViewById(R.id.drawerLayout);
         androidx.appcompat.widget.Toolbar toolbar = (androidx.appcompat.widget.Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
         toggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
-        navBarUsername = (TextView)findViewById(R.id.navBarUsername);
-        navBarInstitute = (TextView)findViewById(R.id.navBarInstitute);
+
+        View header = navigationView.getHeaderView(0);
+        navBarUsername = (TextView)header.findViewById(R.id.navBarUsername);
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @SuppressLint("NonConstantResourceId")
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
@@ -57,28 +69,34 @@ public class UserProfile extends AppCompatActivity {
                 {
                     case R.id.logout_logo:
                     {
+                        //Logout user.
                         FirebaseAuth.getInstance().signOut();
                         drawerLayout.closeDrawer(GravityCompat.START);
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                         startActivity(intent);
                         UserProfile.this.finish();
                     }
-
+                    case R.id.myProfile:
+                    {
+                        //Switch to my profile fragment.
+                    }
+                    case R.id.assignments:
+                    {
+                        //Switch to assignments fragment.
+                    }
+                    case R.id.faculty:
+                    {
+                        //Switch to faculty fragment.
+                    }
                 }
 
                 return true;
             }
         });
 
-
-        Intent intent = getIntent();
-        remember_me = intent.getBooleanExtra("remember_me", true);
-        user = FirebaseAuth.getInstance().getCurrentUser();
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(user.getUid());
-
         if(user != null)
         {
-            Toast.makeText(UserProfile.this, "Welcome " + user.getDisplayName(), Toast.LENGTH_SHORT ).show();
+            Toast.makeText(getApplicationContext(), "Welcome " + user.getDisplayName(), Toast.LENGTH_SHORT).show();
             navBarUsername.setText(user.getDisplayName());
         }
     }
