@@ -25,13 +25,13 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class UserProfile extends AppCompatActivity {
+public class UserProfile extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     NavigationView navigationView;
     ActionBarDrawerToggle toggle;
     DrawerLayout drawerLayout;
     FirebaseUser user;
-    TextView navBarUsername;
+    TextView navBarUsername, navBarEmail;
     LinearLayout navigation_header;
     boolean remember_me;
 
@@ -46,76 +46,89 @@ public class UserProfile extends AppCompatActivity {
         remember_me = intent.getBooleanExtra("remember_me", true);
         user = FirebaseAuth.getInstance().getCurrentUser();
 
-
-        navigationView = (NavigationView)findViewById(R.id.navigationView);
-        drawerLayout = (DrawerLayout)findViewById(R.id.drawerLayout);
         androidx.appcompat.widget.Toolbar toolbar = (androidx.appcompat.widget.Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        navigationView = (NavigationView)findViewById(R.id.navigationView);
+        drawerLayout = (DrawerLayout)findViewById(R.id.drawerLayout);
 
-
-        toggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
+        //Set toolbar and drawer layout.
+        toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
+        //Load initial assignments fragment.
+        if(savedInstanceState == null)
+        {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AssignmentsFragment()).commit();
+            navigationView.setCheckedItem(R.id.nav_assignments);
+        }
+
         View header = navigationView.getHeaderView(0);
         navBarUsername = (TextView)header.findViewById(R.id.navBarUsername);
-
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @SuppressLint("NonConstantResourceId")
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-                switch (item.getItemId())
-                {
-                    case R.id.logout_logo:
-                    {
-                        //Logout user.
-                        FirebaseAuth.getInstance().signOut();
-                        drawerLayout.closeDrawer(GravityCompat.START);
-                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                        startActivity(intent);
-                        UserProfile.this.finish();
-                    }
-                    case R.id.myProfile:
-                    {
-                        //Switch to my profile fragment.
-                    }
-                    case R.id.assignments:
-                    {
-                        //Switch to assignments fragment.
-                    }
-                    case R.id.faculty:
-                    {
-                        //Switch to faculty fragment.
-                    }
-                }
-
-                return true;
-            }
-        });
-
+        navBarEmail = (TextView)header.findViewById(R.id.navBarEmail);
         if(user != null)
         {
             Toast.makeText(getApplicationContext(), "Welcome " + user.getDisplayName(), Toast.LENGTH_SHORT).show();
             navBarUsername.setText(user.getDisplayName());
+            navBarEmail.setText(user.getEmail());
         }
+
+        navigationView.setNavigationItemSelectedListener(this);
     }
 
 
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        Intent intent;
-        if(remember_me)
+    public void onBackPressed()
+    {
+        /*
+         * Utility : Close Drawer if open else navigate to respective activity.
+         */
+        if(drawerLayout.isDrawerOpen(GravityCompat.START))
         {
-            intent = new Intent(UserProfile.this, MainActivity.class);
+            drawerLayout.closeDrawer(GravityCompat.START);
         }
         else
         {
-            intent = new Intent(UserProfile.this, LoginActivity.class);
-            FirebaseAuth.getInstance().signOut();
+            Intent intent;
+            if(remember_me)
+            {
+                intent = new Intent(UserProfile.this, MainActivity.class);
+            }
+            else
+            {
+                intent = new Intent(UserProfile.this, LoginActivity.class);
+                FirebaseAuth.getInstance().signOut();
+            }
+            startActivity(intent);
+            UserProfile.this.finish();
+            super.onBackPressed();
         }
-        startActivity(intent);
-        UserProfile.this.finish();
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch(item.getItemId())
+        {
+            case R.id.nav_logout:
+            {
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+                UserProfile.this.finish();
+                break;
+            }
+            case R.id.nav_myProfile:
+            {
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new UpdateProfileFragment()).commit();
+                break;
+            }
+            case R.id.nav_assignments:
+            {
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AssignmentsFragment()).commit();
+                break;
+            }
+        }
+        drawerLayout.closeDrawer(GravityCompat.START);
+        return true;
     }
 }
