@@ -21,4 +21,6 @@
     <string name="my_profile">My Profile</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
+    <string name="update_profile">Update Profile</string>
+    <string name="update">Update</string>
 </resources>

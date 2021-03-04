@@ -66,7 +66,7 @@ public class UserProfile extends AppCompatActivity implements NavigationView.OnN
         View header = navigationView.getHeaderView(0);
         navBarUsername = (TextView)header.findViewById(R.id.navBarUsername);
         navBarEmail = (TextView)header.findViewById(R.id.navBarEmail);
-        if(user != null)
+        if(user != null && savedInstanceState != null)
         {
             Toast.makeText(getApplicationContext(), "Welcome " + user.getDisplayName(), Toast.LENGTH_SHORT).show();
             navBarUsername.setText(user.getDisplayName());
