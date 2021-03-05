@@ -66,7 +66,7 @@ public class UserProfile extends AppCompatActivity implements NavigationView.OnN
         View header = navigationView.getHeaderView(0);
         navBarUsername = (TextView)header.findViewById(R.id.navBarUsername);
         navBarEmail = (TextView)header.findViewById(R.id.navBarEmail);
-        if(user != null && savedInstanceState != null)
+        if(user != null)
         {
             Toast.makeText(getApplicationContext(), "Welcome " + user.getDisplayName(), Toast.LENGTH_SHORT).show();
             navBarUsername.setText(user.getDisplayName());
@@ -105,6 +105,7 @@ public class UserProfile extends AppCompatActivity implements NavigationView.OnN
         }
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch(item.getItemId())
