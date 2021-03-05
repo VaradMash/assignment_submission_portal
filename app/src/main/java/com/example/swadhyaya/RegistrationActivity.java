@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,9 +21,11 @@ import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.regex.Pattern;
+
 public class RegistrationActivity extends AppCompatActivity
 {
-    EditText etSignUpUsername, etSignUpEmail, etSignUpPassword, etInstitution, etClass;
+    EditText etSignUpUsername, etSignUpEmail, etSignUpPassword, etInstitution, etClass, etConfirmPassword;
     Button btnRegister, btnOpenLogin;
     FirebaseAuth mAuth;
     DatabaseReference mDatabase;
@@ -42,9 +45,8 @@ public class RegistrationActivity extends AppCompatActivity
         etSignUpPassword.setText("");
         etClass.setText("");
         etInstitution.setText("");
-        //Intent Launch.
-        Intent intent = new Intent(RegistrationActivity.this, com.example.swadhyaya.MainActivity.class);
-        startActivity(intent);
+        etConfirmPassword.setText("");
+        ;
         RegistrationActivity.this.finish();
     }
 
@@ -74,6 +76,7 @@ public class RegistrationActivity extends AppCompatActivity
         etSignUpEmail = (EditText)findViewById(R.id.etSignUpEmail);
         etSignUpPassword = (EditText)findViewById(R.id.etSignUpPassword);
         etInstitution = (EditText)findViewById(R.id.etInstitution);
+        etConfirmPassword = (EditText)findViewById(R.id.etConfirmPassword);
         etClass = (EditText)findViewById(R.id.etClass);
         btnRegister = (Button)findViewById(R.id.btnRegister);
         btnOpenLogin = (Button)findViewById(R.id.btnOpenLogin);
@@ -97,6 +100,7 @@ public class RegistrationActivity extends AppCompatActivity
                 etSignUpPassword.setText("");
                 etClass.setText("");
                 etInstitution.setText("");
+                etConfirmPassword.setText("");
                 //Intent launch.
                 Intent intent = new Intent(RegistrationActivity.this, com.example.swadhyaya.LoginActivity.class);
                 startActivity(intent);
@@ -117,10 +121,57 @@ public class RegistrationActivity extends AppCompatActivity
                 String class_name = etClass.getText().toString();
                 String institution = etInstitution.getText().toString();
                 String password = etSignUpPassword.getText().toString();
+                String confirm_password = etConfirmPassword.getText().toString();
                 //Validate if all fields are not empty.
-                if (username.isEmpty() || email.isEmpty() ||class_name.isEmpty() || institution.isEmpty() || password.isEmpty())
+                if (username.isEmpty() || email.isEmpty() ||class_name.isEmpty() || institution.isEmpty() || password.isEmpty() || confirm_password.isEmpty())
                 {
-                    Toast.makeText(RegistrationActivity.this, "Please Enter all Fields !", Toast.LENGTH_SHORT).show();
+                    if(username.isEmpty())
+                    {
+                        etSignUpUsername.setError("Username cannot be empty !");
+                        etSignUpUsername.requestFocus();
+                    }
+                    if(email.isEmpty())
+                    {
+                        etSignUpEmail.setError("Email cannot be empty !");
+                        etSignUpEmail.requestFocus();
+                    }
+                    if(class_name.isEmpty())
+                    {
+                        etClass.setError("Class cannot be empty");
+                        etClass.requestFocus();
+                    }
+                    if(institution.isEmpty())
+                    {
+                        etInstitution.setError("Institution cannot be empty !");
+                        etInstitution.requestFocus();
+                    }
+                    if(password.isEmpty())
+                    {
+                        etSignUpPassword.setError("Password cannot be empty !");
+                        etSignUpPassword.requestFocus();
+                    }
+                    if(confirm_password.isEmpty())
+                    {
+                        etConfirmPassword.setError("Password cannot be empty !");
+                        etConfirmPassword.requestFocus();
+                    }
+                }
+                else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches())
+                {
+                    etSignUpEmail.setError("Please enter valid email !");
+                    etSignUpEmail.requestFocus();
+                }
+                else if (password.length() < 6)
+                {
+                    etSignUpPassword.setError("Password too short !");
+                    etSignUpPassword.requestFocus();
+                }
+                else if (!password.equals(confirm_password))
+                {
+                    etSignUpPassword.setError("Passwords do not match !");
+                    etConfirmPassword.setError("Passwords do not match !");
+                    etSignUpPassword.requestFocus();
+                    etConfirmPassword.requestFocus();
                 }
                 else
                 {
@@ -157,6 +208,7 @@ public class RegistrationActivity extends AppCompatActivity
                                                             etSignUpPassword.setText("");
                                                             etClass.setText("");
                                                             etInstitution.setText("");
+                                                            etConfirmPassword.setText("");
                                                             //Close current intent
                                                             RegistrationActivity.this.finish();
                                                         }

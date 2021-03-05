@@ -92,7 +92,8 @@ public class UserProfile extends AppCompatActivity implements NavigationView.OnN
             Intent intent;
             if(remember_me)
             {
-                intent = new Intent(UserProfile.this, MainActivity.class);
+                UserProfile.this.finish();
+                return;
             }
             else
             {
@@ -113,7 +114,7 @@ public class UserProfile extends AppCompatActivity implements NavigationView.OnN
             case R.id.nav_logout:
             {
                 FirebaseAuth.getInstance().signOut();
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(intent);
                 UserProfile.this.finish();
                 break;
@@ -127,6 +128,10 @@ public class UserProfile extends AppCompatActivity implements NavigationView.OnN
             {
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AssignmentsFragment()).commit();
                 break;
+            }
+            case R.id.nav_exit:
+            {
+                UserProfile.this.finish();
             }
         }
         drawerLayout.closeDrawer(GravityCompat.START);

@@ -60,7 +60,16 @@ public class LoginActivity extends AppCompatActivity
                 //If fields are empty, display error message.
                 if(email.isEmpty() || password.isEmpty())
                 {
-                    Toast.makeText(LoginActivity.this, "Please enter all fields !", Toast.LENGTH_SHORT).show();
+                    if(email.isEmpty())
+                    {
+                        etSignInEmail.setError("Email cannot be empty !");
+                        etSignInEmail.requestFocus();
+                    }
+                    if(password.isEmpty())
+                    {
+                        etSignInPassword.setError("Password cannot be empty !");
+                        etSignInPassword.requestFocus();
+                    }
                 }
                 else
                 {
@@ -156,8 +165,6 @@ public class LoginActivity extends AppCompatActivity
         etSignInEmail.setText("");
         etSignInPassword.setText("");
         //Intent launch.
-        Intent intent = new Intent(LoginActivity.this, com.example.swadhyaya.MainActivity.class);
-        startActivity(intent);
         LoginActivity.this.finish();
     }
 }
