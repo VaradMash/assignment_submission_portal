@@ -20,4 +20,20 @@ public class User
         this.institution = institution;
         this.class_name = class_name;
     }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getInstitution() {
+        return institution;
+    }
+
+    public String getClass_name() {
+        return class_name;
+    }
 }

@@ -29,4 +29,8 @@
     <string name="exit_message">Are you sure you want to Exit?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="my_assignments">My Assignments</string>
+    <string name="assignment">Assignment</string>
+    <string name="faculty">Faculty</string>
+    <string name="subject">Subject</string>
 </resources>

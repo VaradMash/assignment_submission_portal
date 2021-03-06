@@ -22,8 +22,11 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class UpdateProfileFragment extends Fragment {
 
@@ -48,14 +51,38 @@ public class UpdateProfileFragment extends Fragment {
         btnUpdateProfile = (Button)view.findViewById(R.id.btnUpdateProfile);
         updateProfileProgressBar = (ProgressBar)view.findViewById(R.id.updateProfileProgressBar);
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
+        updateProfileProgressBar.setVisibility(View.VISIBLE);
+        mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot)
+            {
 
+                User user = null;
+                for(DataSnapshot current_user : snapshot.getChildren())
+                {
+                    user = current_user.getValue(User.class);
+                    if (mAuth.getCurrentUser().getDisplayName().equals(user.getUsername()))
+                    {
+                        break;
+                    }
+                }
+                etUpdateUsername.setText(user.getUsername());
+                etUpdateClass.setText(user.getClass_name());
+                etUpdateInstitution.setText(user.getInstitution());
+                tvEmail.setText(user.getEmail());
+                updateProfileProgressBar.setVisibility(View.GONE);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(getContext(), "An error occured ! Please try again later.", Toast.LENGTH_SHORT).show();
+                updateProfileProgressBar.setVisibility(View.GONE);
+            }
+        });
         //Initialize Firebase client.
         mAuth = FirebaseAuth.getInstance();
 
-
-        //Set text view to previous data.
-        etUpdateUsername.setText(mAuth.getCurrentUser().getDisplayName());
-        tvEmail.setText(mAuth.getCurrentUser().getEmail());
 
         //Set on click listener for updating profile.*/
         btnUpdateProfile.setOnClickListener(new View.OnClickListener() {
@@ -90,7 +117,6 @@ public class UpdateProfileFragment extends Fragment {
                 }
                 else
                 {
-                    updateProfileProgressBar.setVisibility(View.VISIBLE);
                     FirebaseUser current_user = mAuth.getCurrentUser();
                     User user = new User(username, current_user.getEmail(), institution, class_name);
                     //Set username in authentication table.
@@ -105,19 +131,18 @@ public class UpdateProfileFragment extends Fragment {
                                     if(task.isSuccessful())
                                     {
                                         Toast.makeText(getContext(), "Profile updated !", Toast.LENGTH_SHORT).show();
+                                        //Reroute to login after profile update.
+                                        Intent intent = new Intent(getActivity(), LoginActivity.class);
+                                        startActivity(intent);
+                                        getActivity().finish();
+                                        mAuth.signOut();
                                     }
                                     else
                                     {
                                         Toast.makeText(getContext(), "Error !", Toast.LENGTH_SHORT).show();
                                     }
-                                    updateProfileProgressBar.setVisibility(View.GONE);
                                 }
                             });
-                    //Reroute to login after profile update.
-                    Intent intent = new Intent(getActivity(), MainActivity.class);
-                    startActivity(intent);
-                    getActivity().finish();
-                    mAuth.signOut();
 
                 }
             }
