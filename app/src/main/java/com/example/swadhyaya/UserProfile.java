@@ -2,6 +2,7 @@ package com.example.swadhyaya;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
@@ -15,6 +16,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -89,20 +91,40 @@ public class UserProfile extends AppCompatActivity implements NavigationView.OnN
         }
         else
         {
-            Intent intent;
-            if(remember_me)
-            {
-                UserProfile.this.finish();
-                return;
-            }
-            else
-            {
-                intent = new Intent(UserProfile.this, LoginActivity.class);
-                FirebaseAuth.getInstance().signOut();
-            }
-            startActivity(intent);
-            UserProfile.this.finish();
-            super.onBackPressed();
+            AlertDialog.Builder alert_dialog = new AlertDialog.Builder(UserProfile.this);
+            View dialog_view = getLayoutInflater().inflate(R.layout.exit_dialog, null);
+            Button btnExit = (Button)dialog_view.findViewById(R.id.btnExit);
+            Button btnCancel = (Button)dialog_view.findViewById(R.id.btnCancel);
+
+            alert_dialog.setView(dialog_view);
+            AlertDialog alertDialog = alert_dialog.create();
+            alert_dialog.setCancelable(false);
+
+            btnExit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent;
+                    if(remember_me)
+                    {
+                        UserProfile.this.finish();
+                        return;
+                    }
+                    else
+                    {
+                        intent = new Intent(UserProfile.this, LoginActivity.class);
+                        FirebaseAuth.getInstance().signOut();
+                    }
+                    startActivity(intent);
+                    UserProfile.this.finish();
+                }
+            });
+            btnCancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    alertDialog.dismiss();
+                }
+            });
+            alertDialog.show();
         }
     }
 
@@ -131,7 +153,34 @@ public class UserProfile extends AppCompatActivity implements NavigationView.OnN
             }
             case R.id.nav_exit:
             {
-                UserProfile.this.finish();
+                AlertDialog.Builder alert_dialog = new AlertDialog.Builder(UserProfile.this);
+                View dialog_view = getLayoutInflater().inflate(R.layout.exit_dialog, null);
+                Button btnExit = (Button)dialog_view.findViewById(R.id.btnExit);
+                Button btnCancel = (Button)dialog_view.findViewById(R.id.btnCancel);
+
+                alert_dialog.setView(dialog_view);
+                AlertDialog alertDialog = alert_dialog.create();
+                alert_dialog.setCancelable(false);
+
+                btnExit.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(!remember_me)
+                        {
+                            FirebaseAuth.getInstance().signOut();
+                        }
+                        UserProfile.this.finish();
+                    }
+                });
+                btnCancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        alertDialog.dismiss();
+                    }
+                });
+
+                alertDialog.show();
+
             }
         }
         drawerLayout.closeDrawer(GravityCompat.START);

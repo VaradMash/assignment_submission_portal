@@ -1,6 +1,7 @@
 package com.example.swadhyaya;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
@@ -155,16 +156,37 @@ public class LoginActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
         /*
          * Input : None
          * Utility: On pressing back button, launch main activity and clear field contents.
          * Output : Launch main activity.
          */
-        //Clear text field.
-        etSignInEmail.setText("");
-        etSignInPassword.setText("");
-        //Intent launch.
-        LoginActivity.this.finish();
+        AlertDialog.Builder alert_dialog = new AlertDialog.Builder(LoginActivity.this);
+        View dialog_view = getLayoutInflater().inflate(R.layout.exit_dialog, null);
+        Button btnExit = (Button)dialog_view.findViewById(R.id.btnExit);
+        Button btnCancel = (Button)dialog_view.findViewById(R.id.btnCancel);
+
+        alert_dialog.setView(dialog_view);
+        AlertDialog alertDialog = alert_dialog.create();
+        alert_dialog.setCancelable(false);
+
+        btnExit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Clear all fields.
+                //Clear text field.
+                etSignInEmail.setText("");
+                etSignInPassword.setText("");
+                //Intent launch.
+                LoginActivity.this.finish();
+            }
+        });
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+            }
+        });
+        alertDialog.show();
     }
 }

@@ -1,6 +1,7 @@
 package com.example.swadhyaya;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -33,21 +34,40 @@ public class RegistrationActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
         /*
          * Input: None
          * Utility: Clear all text fields and go to main page.
          * Output: Main page.
          */
-        //Clear all fields.
-        etSignUpUsername.setText("");
-        etSignUpEmail.setText("");
-        etSignUpPassword.setText("");
-        etClass.setText("");
-        etInstitution.setText("");
-        etConfirmPassword.setText("");
-        ;
-        RegistrationActivity.this.finish();
+        AlertDialog.Builder alert_dialog = new AlertDialog.Builder(RegistrationActivity.this);
+        View dialog_view = getLayoutInflater().inflate(R.layout.exit_dialog, null);
+        Button btnExit = (Button)dialog_view.findViewById(R.id.btnExit);
+        Button btnCancel = (Button)dialog_view.findViewById(R.id.btnCancel);
+
+        alert_dialog.setView(dialog_view);
+        AlertDialog alertDialog = alert_dialog.create();
+        alert_dialog.setCancelable(false);
+
+        btnExit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Clear all fields.
+                etSignUpUsername.setText("");
+                etSignUpEmail.setText("");
+                etSignUpPassword.setText("");
+                etClass.setText("");
+                etInstitution.setText("");
+                etConfirmPassword.setText("");
+                RegistrationActivity.this.finish();
+            }
+        });
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+            }
+        });
+        alertDialog.show();
     }
 
     @Override
