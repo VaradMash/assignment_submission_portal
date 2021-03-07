@@ -217,11 +217,6 @@ public class RegistrationActivity extends AppCompatActivity
                                                     public void onComplete(@NonNull Task<Void> task) {
                                                         if(task.isSuccessful())
                                                         {
-                                                            Toast.makeText(RegistrationActivity.this, "Registration successful !", Toast.LENGTH_SHORT).show();
-                                                            //Jump to user profile.
-                                                            Intent intent = new Intent(RegistrationActivity.this, com.example.swadhyaya.UserProfile.class);
-                                                            intent.putExtra("remember_me", true);
-                                                            startActivity(intent);
                                                             //Clear field contents.
                                                             etSignUpUsername.setText("");
                                                             etSignUpEmail.setText("");
@@ -229,6 +224,11 @@ public class RegistrationActivity extends AppCompatActivity
                                                             etClass.setText("");
                                                             etInstitution.setText("");
                                                             etConfirmPassword.setText("");
+                                                            Toast.makeText(RegistrationActivity.this, "Registration successful !", Toast.LENGTH_SHORT).show();
+                                                            //Jump to user profile.
+                                                            Intent intent = new Intent(RegistrationActivity.this, com.example.swadhyaya.UserProfile.class);
+                                                            intent.putExtra("remember_me", true);
+                                                            startActivity(intent);
                                                             //Close current intent
                                                             RegistrationActivity.this.finish();
                                                         }
