@@ -73,7 +73,7 @@ public class FacultyFragment extends Fragment {
                 for(DataSnapshot faculty: snapshot.getChildren())
                 {
                     current_faculty = faculty.getValue(Faculty.class);
-                    if (current_faculty.getClass_name().equals(current_user.getClass_name())) {
+                    if (current_faculty.getClass_name().equals(current_user.getClass_name()) && current_faculty.getInstitution().equals(current_user.getInstitution())) {
                         facultyList.add(current_faculty);
                     }
                 }

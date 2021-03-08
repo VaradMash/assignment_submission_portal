@@ -13,12 +13,12 @@ import androidx.annotation.Nullable;
 
 import java.util.List;
 
-public class AssignmentList extends ArrayAdapter<User>
+public class AssignmentList extends ArrayAdapter<Assignment>
 {
     private Activity context;
-    private List<User> assignmentList;
+    private List<Assignment> assignmentList;
 
-    public AssignmentList(Activity context, List<User> assignmentList)
+    public AssignmentList(Activity context, List<Assignment> assignmentList)
     {
         super(context, R.layout.assignments_list_layout, assignmentList);
         this.context = context;
@@ -34,9 +34,9 @@ public class AssignmentList extends ArrayAdapter<User>
         TextView tvAssignment = (TextView)assignmentListView.findViewById(R.id.tvAssignment);
         TextView tvSubject = (TextView)assignmentListView.findViewById(R.id.tvSubject);
 
-        User user = assignmentList.get(position);
-        tvAssignment.setText(user.getUsername());
-        tvSubject.setText(user.getClass_name());
+        Assignment assignment = assignmentList.get(position);
+        tvAssignment.setText(assignment.getAssignmentTitle());
+        tvSubject.setText(assignment.getSubject());
         return assignmentListView;
     }
 }

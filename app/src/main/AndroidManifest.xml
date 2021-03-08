@@ -11,8 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Swadhyaya">
-        <activity android:name=".UserProfile"
-            android:noHistory="true"/>
+        <activity android:name=".UserProfile"/>
         <activity android:name=".RegistrationActivity"
             android:screenOrientation="portrait"
             android:noHistory="true"/>
