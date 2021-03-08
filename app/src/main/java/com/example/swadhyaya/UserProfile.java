@@ -140,6 +140,11 @@ public class UserProfile extends AppCompatActivity implements NavigationView.OnN
                 UserProfile.this.finish();
                 break;
             }
+            case R.id.nav_faculty:
+            {
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new FacultyFragment()).commit();
+                break;
+            }
             case R.id.nav_myProfile:
             {
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new UpdateProfileFragment()).commit();

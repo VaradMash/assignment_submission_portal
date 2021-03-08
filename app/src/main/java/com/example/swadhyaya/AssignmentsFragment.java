@@ -59,7 +59,7 @@ public class AssignmentsFragment extends Fragment {
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getActivity(), "Error occured !", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Error occurred !", Toast.LENGTH_SHORT).show();
                 assignmentsProgressBar.setVisibility(View.GONE);
             }
         });

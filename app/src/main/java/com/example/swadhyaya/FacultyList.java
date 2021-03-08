@@ -13,16 +13,16 @@ import androidx.annotation.Nullable;
 
 import java.util.List;
 
-public class AssignmentList extends ArrayAdapter<User>
-{
-    private Activity context;
-    private List<User> assignmentList;
+public class FacultyList extends ArrayAdapter<Faculty> {
 
-    public AssignmentList(Activity context, List<User> assignmentList)
+    private Activity context;
+    private List<Faculty> facultyList;
+
+    public FacultyList(Activity context,List<Faculty> facultyList)
     {
-        super(context, R.layout.assignments_list_layout, assignmentList);
+        super(context, R.layout.faculty_list_layout, facultyList);
         this.context = context;
-        this.assignmentList = assignmentList;
+        this.facultyList = facultyList;
     }
 
     @NonNull
@@ -30,13 +30,12 @@ public class AssignmentList extends ArrayAdapter<User>
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         LayoutInflater layoutInflater = context.getLayoutInflater();
         @SuppressLint("ViewHolder")
-        View assignmentListView = layoutInflater.inflate(R.layout.assignments_list_layout, null, true);
-        TextView tvAssignment = (TextView)assignmentListView.findViewById(R.id.tvAssignment);
+        View assignmentListView = layoutInflater.inflate(R.layout.faculty_list_layout, null, true);
+        TextView tvName = (TextView)assignmentListView.findViewById(R.id.tvName);
         TextView tvSubject = (TextView)assignmentListView.findViewById(R.id.tvSubject);
-
-        User user = assignmentList.get(position);
-        tvAssignment.setText(user.getUsername());
-        tvSubject.setText(user.getClass_name());
+        Faculty faculty = facultyList.get(position);
+        tvName.setText(faculty.getUsername());
+        tvSubject.setText(faculty.getSubject());
         return assignmentListView;
     }
 }
