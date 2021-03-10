@@ -7,6 +7,7 @@ public class Assignment
     private String class_name;
     private String institution;
     private String subject;
+    private boolean active;
 
     public Assignment()
     {
@@ -15,13 +16,15 @@ public class Assignment
          */
     }
 
-    public Assignment(String assignmentTitle, String problemStatement, String class_name, String institution, String subject)
+    public Assignment(String assignmentTitle, String problemStatement, String class_name, String institution, String subject, boolean active)
     {
         this.assignmentTitle = assignmentTitle;
         this.problemStatement = problemStatement;
         this.class_name = class_name;
         this.institution = institution;
         this.subject = subject;
+        this.active = active;
+
     }
 
     public String getAssignmentTitle() {
@@ -43,4 +46,10 @@ public class Assignment
     public String getSubject() {
         return subject;
     }
+
+    public boolean isActive()
+    {
+        return active;
+    }
+
 }
