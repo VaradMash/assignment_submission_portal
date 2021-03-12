@@ -1,6 +1,7 @@
 # assignment_submission_portal
 This repository contains the assignment submission portal built for android devices. 
 
+
 ## Swadhyaya Application
 
 -> This application can be used by students to submit assignments in .pdf format.
@@ -9,7 +10,8 @@ This repository contains the assignment submission portal built for android devi
 
 -> The user can also view his or her own assigned faculty members.
 
-### Current Features
+
+## Current Features
 
 -> User registration and Authentication.
 
