@@ -11,6 +11,7 @@ This repository contains the assignment submission portal built for android devi
 -> The user can also view his or her own assigned faculty members.
 
 
+
 ## Current Features
 
 -> User registration and Authentication.
@@ -22,5 +23,12 @@ This repository contains the assignment submission portal built for android devi
 -> View Assignment list.
 
 
+## Technincal Specifications
 
+1. Front End Development:
 
+-> XML and Java
+
+2. Back End Development:
+
+-> Google Firebase service.
