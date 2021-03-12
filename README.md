@@ -23,7 +23,7 @@ This repository contains the assignment submission portal built for android devi
 -> View Assignment list.
 
 
-## Technincal Specifications
+## Technical Specifications
 
 1. Front End Development:
 
