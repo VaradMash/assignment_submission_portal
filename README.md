@@ -48,4 +48,4 @@ This repository contains the assignment submission portal built for android devi
 
 ## 
 
-Link to Prashikshan Application repository : https://github.com/VaradMash/assignment_creation_portal
+Link to Swadhyaya Application repository : https://github.com/VaradMash/assignment_creation_portal
