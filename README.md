@@ -45,6 +45,7 @@ This repository contains the assignment submission portal built for android devi
 ## Distribution Details
 
 .apk size : 7.841 MB
+
 Target API Level : >=26 (Oreo 8.0.0 or more)
 
 ## 
